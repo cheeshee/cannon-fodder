@@ -95,7 +95,7 @@ public class ICharacter : MonoBehaviour {
 
     private void updateHealthBar()
     {
-        healthBar.transform.localScale = new Vector3(healthPoints / maxHealth, 1, 1);
+        //healthBar.transform.localScale = new Vector3(healthPoints / maxHealth, 1, 1);
     }
 
     protected bool isHealthZero()
@@ -105,7 +105,7 @@ public class ICharacter : MonoBehaviour {
 
     protected virtual void onDeath()
     {
-        onCharacterDeath();
+        // onCharacterDeath();
     }
 
 
