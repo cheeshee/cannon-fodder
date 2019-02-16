@@ -13,7 +13,10 @@ public class EnemyController : ICharacter, IPooledObject {
     protected float meleeDamage = 10;
 
     [SerializeField]
-    protected float speedUpRange = 4; 
+    protected float speedUpRange = 4;
+
+    [SerializeField]
+    protected Vector2 destination = new Vector2(0, 0);
 
     bool isWithinSpeedUp = false;
     
@@ -29,6 +32,7 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         setSpeed();
         agent.enabled = true;
+        agent.SetDestination(destination);
     }
 
     protected virtual void FixedUpdate()
@@ -77,18 +81,18 @@ public class EnemyController : ICharacter, IPooledObject {
     protected virtual void speedUp()
     {
         //time variable is for cool down, which is nothing rn
-        float fastSpeed = base.moveSpeed * player.gameObject.GetComponent<ICharacter>().SpeedModifier();
-        modifySpeed(fastSpeed, 1);
+        float fastSpeed = base.moveSpeed * player.GetComponent<ICharacter>().SpeedModifier();    //player.gameObject.GetComponent<ICharacter>().SpeedModifier();
+        modifySpeed(fastSpeed, 0);
     }
 
     void updateSpriteDirection()
     {
         if (agent.movingDirection.x > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+           // transform.localScale = new Vector3(-1, 1, 1);
         } else
         {
-            transform.localScale = Vector3.one;
+           // transform.localScale = Vector3.one;
         }
     }
     #endregion
