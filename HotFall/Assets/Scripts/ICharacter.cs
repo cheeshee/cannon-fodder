@@ -49,13 +49,13 @@ public class ICharacter : MonoBehaviour {
 
     protected virtual void Update()
     {
-        coolDownMovement();
+        //coolDownMovement();
     }
 
     #endregion
 
     #region Movement
-
+    /*
     void coolDownMovement()
     {
         if (isCoolingDown)
@@ -67,17 +67,17 @@ public class ICharacter : MonoBehaviour {
             }
         }
     }
-
+    */
     public virtual void modifySpeed(float mod, float time)
     {
-        isCoolingDown = true;
+       // isCoolingDown = true;
         coolDownTime = time;
         speedModifier = mod;
     }
 
     protected virtual void resetSpeedCoolDown()
     {
-        isCoolingDown = false;
+        //isCoolingDown = false;
         speedModifier = 1;
     }
     #endregion
@@ -108,11 +108,6 @@ public class ICharacter : MonoBehaviour {
         onCharacterDeath();
     }
 
-    public virtual void incrementHealth(float heal)
-    {
-        healthPoints = Mathf.Clamp(healthPoints + heal, 0, maxHealth);
-        updateHealthBar();
-    }
 
     public void damagedByAttacker(float damage)
     {
@@ -124,6 +119,7 @@ public class ICharacter : MonoBehaviour {
         }
     }
 
+    /*
     public void getKnockedBackSolid(float knockBackAmount, Vector3 attackPos)
     {
         if (!isInvulnerable)
@@ -132,7 +128,7 @@ public class ICharacter : MonoBehaviour {
             GetComponent<Rigidbody2D>().AddForce(knockBack.normalized * -knockBackAmount);
         }
     }
-
+    */
 
     public void resetInvulnerable()
     {

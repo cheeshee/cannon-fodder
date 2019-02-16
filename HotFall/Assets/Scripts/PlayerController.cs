@@ -3,28 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    const string ATTACK_LEFT = "AttackLeft";
-    const string ATTACK_RIGHT = "AttackRight";
-    const string IDLE = "IdleRight";
 
     private Rigidbody2D playerRigidbody;
-    private PlayerSpellController playerSpell;
     private Animator animate;
 
     // Use this for initialization
     void Start () {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        playerSpell = GetComponent<PlayerSpellController>();
         animate = GetComponent<Animator>();
     }
 
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        Vector3 direction = InputManager.MainInput(); //Get input
-        Move(direction);
+        Vector3 direction = Utilities.directionBetweenMouseAndCharacter(gameObject);
         SpriteChange(direction);
+        activateBullet();
     }
+
 
 
     #region CharacterMovement
@@ -34,26 +30,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Move (Vector3 direction)
     {
-        playerRigidbody.velocity = (Vector3.Normalize(direction) * playerSpell.MoveSpeed() * playerSpell.SpeedModifier());
+        //playerRigidbody.velocity = (Vector3.Normalize(direction) * playerSpell.MoveSpeed() * playerSpell.SpeedModifier());
     }
 
-    public void castSpell()
-    {
-        //Convert the player to Screen coordinates
-        Vector3 position = Utilities.worldToScreenObjectPosition(gameObject);
-        position = Input.mousePosition - position;
-        float angle = Utilities.getAngleDegBetween(position.y, position.x);
-
-        string animationName = (angle > -90 && angle < 90) ? ATTACK_RIGHT : ATTACK_LEFT;
-        animate.SetTrigger(animationName);
-        
-    }
 
     private void SpriteChange(Vector3 direction)
     {
         float x = direction.x;
         float y = direction.y;
-
+        /*
 
         if (direction != Vector3.zero)
         {
@@ -72,9 +57,38 @@ public class PlayerController : MonoBehaviour {
                     //playerSpriteRenderer.sprite = downSprite;
                 }
             }
-        }
+        }*/
         
     }
 
     #endregion
+
+    private Quaternion getPlayerRotation()
+    {
+        float angle = Utilities.getAngleDegBetweenMouseAnd(gameObject);
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+
+    void activateBullet()
+    {
+        if (InputManager.isFiring())// && !cooldownHolder.isCoolingDown(0)
+        {
+           // cooldownHolder.InitiateCooldown(0);
+            GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
+            bullet.GetComponent<Bullet>().OnObjectSpawn();
+        }
+    }
+
+    /*
+    protected void onDeath()
+    {
+        if (onCharacterDeath != null)
+        {
+            gameObject.SetActive(false);
+            onCharacterDeath();
+        }
+        onCharacterDeath = null;
+    }
+    */
 }
