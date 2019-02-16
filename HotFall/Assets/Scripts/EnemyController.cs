@@ -38,7 +38,7 @@ public class EnemyController : ICharacter, IPooledObject {
     protected virtual void FixedUpdate()
     {
         speedUpIfNeeded();
-        updateSpriteDirection();
+        //updateSpriteDirection();
     }
 
     #region Motion
