@@ -128,7 +128,6 @@ public class EnemyController : ICharacter, IPooledObject {
 
         if (player.tag == Tags.PLAYER)
         {
-            player.GetComponent<ICharacter>().getKnockedBackSolid(2000, transform.position);
             player.GetComponent<ICharacter>().damagedByAttacker(meleeDamage);
         }
     }

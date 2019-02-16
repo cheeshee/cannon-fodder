@@ -20,7 +20,7 @@ public static class Utilities {
         return getAngleDegBetween(dir.y, dir.x);
     }
 
-    private static Vector3 directionBetweenMouseAndCharacter(GameObject gObj)
+    public static Vector3 directionBetweenMouseAndCharacter(GameObject gObj)
     {
         return Input.mousePosition - worldToScreenObjectPosition(gObj);
     }
