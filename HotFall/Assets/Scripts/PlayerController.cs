@@ -75,8 +75,8 @@ public class PlayerController : MonoBehaviour {
         if (InputManager.isFiring())// && !cooldownHolder.isCoolingDown(0)
         {
            // cooldownHolder.InitiateCooldown(0);
-            GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
-            bullet.GetComponent<Bullet>().OnObjectSpawn();
+           // GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
+           // bullet.GetComponent<Bullet>().OnObjectSpawn();
         }
     }
 
