@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private Quaternion getPlayerRotation()
     {
-        float angle = Utilities.getAngleDegBetweenMouseAnd(gameObject);
+        float angle = Utilities.getAngleDegBetweenMouseAnd(gameObject) - 90 + 11;
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("FIRE");
             playerRigidbody.AddForce(-forceMultipler * Vector3.Normalize(direction), ForceMode2D.Impulse);
             // cooldownHolder.InitiateCooldown(0);
-            // GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
-            // bullet.GetComponent<Bullet>().OnObjectSpawn();
+            GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
+            bullet.GetComponent<Bullet>().OnObjectSpawn();
         }
     }
 
