@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PolyNavAgent))]
 public class EnemyController : ICharacter, IPooledObject {
@@ -15,9 +13,9 @@ public class EnemyController : ICharacter, IPooledObject {
     protected float meleeDamage = 10;
 
     [SerializeField]
-    protected float agroRange = 4; 
+    protected float speedUpRange = 4; 
 
-    bool isAgroingPlayer = false;
+    bool isWithinSpeedUp = false;
     
     protected override void Awake()
     {
@@ -35,7 +33,7 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected virtual void FixedUpdate()
     {
-        gotoPlayerIfNeeded();
+        speedUpIfNeeded();
         updateSpriteDirection();
     }
 
@@ -58,7 +56,7 @@ public class EnemyController : ICharacter, IPooledObject {
     }
 
 
-    protected virtual void gotoPlayerIfNeeded()
+    protected virtual void speedUpIfNeeded()
     {
         if (player == null)
         {
@@ -66,16 +64,21 @@ public class EnemyController : ICharacter, IPooledObject {
         }
         else
         {
-            if (Vector3.Distance(player.transform.position, transform.position) <= this.agroRange)
+            if (Vector3.Distance(player.transform.position, transform.position) <= this.speedUpRange)
             {
-                goToPlayer();
+                speedUp();
+            } else
+            {
+                setSpeed();
             }
         }
     }
 
-    protected virtual void goToPlayer()
+    protected virtual void speedUp()
     {
-        agent.SetDestination(player.transform.position);
+        //time variable is for cool down, which is nothing rn
+        float fastSpeed = base.moveSpeed * player.gameObject.GetComponent<ICharacter>().SpeedModifier();
+        modifySpeed(fastSpeed, 1);
     }
 
     void updateSpriteDirection()
@@ -96,7 +99,6 @@ public class EnemyController : ICharacter, IPooledObject {
         base.decrementHealth(damage);
         if (!isHealthZero())
         {
-            goToPlayer();
             runAnimation(ANIMATION_DAMAGED);
         }
     }
@@ -139,7 +141,7 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, agroRange);
+        Gizmos.DrawWireSphere(transform.position, speedUpRange);
     }
     #endregion
 }
