@@ -13,10 +13,7 @@ public class EnemyController : ICharacter, IPooledObject {
     protected float meleeDamage = 10;
 
     [SerializeField]
-    protected float speedUpRange = 4;
-
-    [SerializeField]
-    protected Vector2 destination = new Vector2(0, 0);
+    protected float speedUpRange = 4; 
 
     bool isWithinSpeedUp = false;
     
@@ -32,7 +29,6 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         setSpeed();
         agent.enabled = true;
-        agent.SetDestination(destination);
     }
 
     protected virtual void FixedUpdate()
@@ -85,7 +81,6 @@ public class EnemyController : ICharacter, IPooledObject {
         modifySpeed(fastSpeed, 1);
     }
 
-    /* //only for following player
     void updateSpriteDirection()
     {
         if (agent.movingDirection.x > 0)
@@ -96,7 +91,6 @@ public class EnemyController : ICharacter, IPooledObject {
             transform.localScale = Vector3.one;
         }
     }
-    */
     #endregion
 
     #region LifeDeath
