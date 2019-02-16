@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour {
     const string IDLE = "IdleRight";
 
     private Rigidbody2D playerRigidbody;
-    private PlayerSpellController playerSpell;
     private Animator animate;
 
     // Use this for initialization
@@ -24,7 +23,9 @@ public class PlayerController : MonoBehaviour {
         Vector3 direction = InputManager.MainInput(); //Get input
         Move(direction);
         SpriteChange(direction);
+        activateFireball();
     }
+
 
 
     #region CharacterMovement
@@ -77,4 +78,33 @@ public class PlayerController : MonoBehaviour {
     }
 
     #endregion
+
+    private Quaternion getPlayerRotation()
+    {
+        float angle = Utilities.getAngleDegBetweenMouseAnd(gameObject);
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+
+    void activateFireball()
+    {
+        if (InputManager.isFiring() && !cooldownHolder.isCoolingDown(0))
+        {
+            cooldownHolder.InitiateCooldown(0);
+            GameObject fireball = ObjectPooler.Instance.SpawnFromPool(Pool.FIREBALL, transform.position, getPlayerRotation());
+            fireball.GetComponent<Fireball>().OnObjectSpawn();
+            playerController.castSpell();
+        }
+    }
+
+
+    protected void onDeath()
+    {
+        if (onCharacterDeath != null)
+        {
+            gameObject.SetActive(false);
+            onCharacterDeath();
+        }
+        onCharacterDeath = null;
+    }
 }
