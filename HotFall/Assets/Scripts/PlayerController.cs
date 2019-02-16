@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-
-    [SerializeField]
-    float forceMultipler;
-
     private Rigidbody2D playerRigidbody;
     private Animator animate;
 
@@ -21,8 +17,8 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         Vector3 direction = Utilities.directionBetweenMouseAndCharacter(gameObject);
-        SpriteRotation(direction);
-        activateBullet(direction);
+        SpriteChange(direction);
+        activateBullet();
     }
 
 
@@ -38,10 +34,10 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    private void SpriteRotation(Vector3 direction)
+    private void SpriteChange(Vector3 direction)
     {
-        float angle = Utilities.getAngleDegBetweenMouseAnd(gameObject) - 90;
-        gameObject.transform.eulerAngles = new Vector3(0f,0f,angle);
+        float x = direction.x;
+        float y = direction.y;
         /*
 
         if (direction != Vector3.zero)
@@ -62,7 +58,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }*/
-
+        
     }
 
     #endregion
@@ -74,12 +70,10 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    void activateBullet(Vector3 direction)
+    void activateBullet()
     {
         if (InputManager.isFiring())// && !cooldownHolder.isCoolingDown(0)
         {
-            Debug.Log("FIRE");
-            playerRigidbody.AddForce(-forceMultipler * Vector3.Normalize(direction), ForceMode2D.Impulse);
            // cooldownHolder.InitiateCooldown(0);
            // GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
            // bullet.GetComponent<Bullet>().OnObjectSpawn();
