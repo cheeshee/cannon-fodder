@@ -2,20 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : IProjectile, IPooledObject
+public class Fireball : ISpell, IPooledObject
 {
     //Animation
-    //const string ANIMATION_EXPLOSION = "Explode";
-    //const float EXPLOSION_ANIMATION_TIME = 0.4f;
+    const string ANIMATION_EXPLOSION = "Explode";
+    const float EXPLOSION_ANIMATION_TIME = 0.4f;
 
-        /*
     protected override void onMovementTimeToLiveStopped()
     {
-        gameObject.SetActive(false);
-    }
-    */
-
-    void OnBecameInvisible() {
         gameObject.SetActive(false);
     }
 
@@ -23,7 +17,7 @@ public class Bullet : IProjectile, IPooledObject
     {
         Vector3 dir = transform.rotation.eulerAngles;
         angle = Utilities.getAngleDegBetween(dir.y, dir.x) + 90;
-        //base.currentTimeToLive = 0;
+        base.currentTimeToLive = 0;
         isMoving = true;
     }
 
@@ -33,12 +27,11 @@ public class Bullet : IProjectile, IPooledObject
         if (hitTarget.tag == Tags.ENEMY)
         {
             hitTarget.GetComponent<ICharacter>().decrementHealth(damage);
-            gameObject.SetActive(false);
         }
 
         base.OnTriggerEnter2D(col);
     }
-/*
+
     protected override void onSpellHitObject()
     {
         isMoving = false;
@@ -50,5 +43,4 @@ public class Bullet : IProjectile, IPooledObject
     {
         gameObject.SetActive(false);
     }
-*/
 }

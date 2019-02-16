@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class IProjectile : MonoBehaviour
+public abstract class ISpell : MonoBehaviour
 {
 
     [SerializeField] float velocity;
@@ -9,7 +9,7 @@ public abstract class IProjectile : MonoBehaviour
     [SerializeField] protected float damage;
 
     protected float angle;
-    //protected float currentTimeToLive; //currentDuration
+    protected float currentTimeToLive; //currentDuration
     protected bool isMoving = true;
 
     protected string[] listOfObstacleTags = {Tags.ENEMY, Tags.SOLID_OBSTACLE};
@@ -20,13 +20,11 @@ public abstract class IProjectile : MonoBehaviour
         if (isMoving)
         {
             transform.Translate(VectorFromAngle(angle) * velocity);
-            /*
             currentTimeToLive += Time.fixedDeltaTime;
             if (currentTimeToLive > spellMovementTimeToLive)
             {
                 onMovementTimeToLiveStopped();
             }
-            */
         }
     }
 
@@ -41,14 +39,14 @@ public abstract class IProjectile : MonoBehaviour
         {
             if (tag == listOfObstacleTags[i])
             {
-                //onSpellHitObject();
+                onSpellHitObject();
             }
         }
     }
 
-    //protected abstract void onSpellHitObject();
+    protected abstract void onSpellHitObject();
 
-    //protected abstract void onMovementTimeToLiveStopped();
+    protected abstract void onMovementTimeToLiveStopped();
 
 
     #region Tools
