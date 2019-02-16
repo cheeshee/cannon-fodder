@@ -34,3 +34,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+HotFall/Library/shadercompiler-UnityShaderCompiler.exe0.log
+HotFall/Library/LastSceneManagerSetup.txt
+HotFall/Library/assetDatabase3
