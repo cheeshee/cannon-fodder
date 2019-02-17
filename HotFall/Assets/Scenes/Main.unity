@@ -751,7 +751,7 @@ MonoBehaviour:
     prefab: {fileID: 1050384367122856, guid: 49b8741368da1f34da9f27a77ab37bde, type: 3}
     size: 90
   - tag: BasicEnemy
-    prefab: {fileID: 7935908451336084756, guid: 56052279b74b6974db28a3f697f2ee6d,
+    prefab: {fileID: 6468734434737578542, guid: 56052279b74b6974db28a3f697f2ee6d,
       type: 3}
     size: 50
 --- !u!4 &405411874

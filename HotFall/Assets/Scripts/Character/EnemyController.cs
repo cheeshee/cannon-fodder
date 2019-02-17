@@ -6,13 +6,14 @@ public class EnemyController : ICharacter, IPooledObject {
     const string ANIMATION_DAMAGED = "Damaged";
 
     protected GameObject player;
-
+    [SerializeField]
+    protected float meleeDamage = 10;
     [SerializeField]
     protected float speedMultiplier = 1;
     [SerializeField]
-    public float maximumSpeedMultiplier = 3f;
+    protected float maximumSpeedMultiplier = 3f;
 
-    public Vector2 destination;
+    protected Vector2 destination;
 
     float step;
 
