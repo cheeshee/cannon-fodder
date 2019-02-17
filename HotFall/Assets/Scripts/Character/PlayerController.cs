@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     float forceMultipler;
+    [SerializeField]
+    float wallVelocity;
 
     [SerializeField]
     protected float speedUpRange = 5;
@@ -29,12 +31,16 @@ public class PlayerController : MonoBehaviour
     bool delayFlag = false;
     bool isInvuln;
 
+
+    public float velocity;
+
     // Use this for initialization
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         animate = GetComponent<Animator>();
         isInvuln = false;
+        velocity = 0;
     }
 
 
@@ -44,12 +50,42 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = Utilities.directionBetweenMouseAndCharacter(gameObject);
         SpriteRotation(direction);
         activateBullet(direction);
+        updateVelocityMultiplier();
     }
+
+
+    private bool inContact()
+    {
+        return transform.position.x < -10.1 || transform.position.x > 10.1 || transform.position.y < -3.6 || transform.position.y > 3.6;
+    }
+
+
+    private void updateVelocityMultiplier()
+    {
+        if (InputManager.isFiring() && inContact())
+        {
+            velocity = wallVelocity;
+        }
+        else {
+            velocity = gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+                }
+    }
+
+    public float getVelocity()
+    {
+        return velocity;
+    }
+
+
+
+
+
+
 
     #region Health
 
     public virtual void decrementHealth(float damage)
-    {   
+    {
         if (!isInvuln)
         {
             healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
@@ -159,6 +195,8 @@ public class PlayerController : MonoBehaviour
         return speedUpRange;
     }
 
+
+
     /*
     protected void onDeath()
     {
@@ -170,5 +208,5 @@ public class PlayerController : MonoBehaviour
         onCharacterDeath = null;
     }
     */
-    
+
 }

@@ -55,7 +55,7 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         if (isWithinSpeedUp())
         {
-            float speedIncrease = base.speedModifier * (speedMultiplier * player.GetComponent<Rigidbody2D>().velocity.magnitude);
+            float speedIncrease = base.speedModifier * (speedMultiplier * player.GetComponent<PlayerController>().getVelocity());
             step = Mathf.Min(speedIncrease * Time.deltaTime, maximumSpeedMultiplier * base.MoveSpeed() * Time.deltaTime);
         }
         else
