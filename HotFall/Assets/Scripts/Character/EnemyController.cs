@@ -14,6 +14,7 @@ public class EnemyController : ICharacter, IPooledObject {
     protected float maximumSpeedMultiplier = 3f;
 
     protected Vector2 destination;
+    
 
     float step;
 
@@ -32,6 +33,7 @@ public class EnemyController : ICharacter, IPooledObject {
        
         healthPoints = maxHealth;
         base.updateHealthBar();
+
         updateSpriteDirection();
 
     }
@@ -41,6 +43,7 @@ public class EnemyController : ICharacter, IPooledObject {
         setSpeed();
         updateDestination();
         move();
+        
         updateSpriteDirection();
     }
 
@@ -79,15 +82,16 @@ public class EnemyController : ICharacter, IPooledObject {
     
     void updateSpriteDirection()
     {
-        
+
         float x = gameObject.transform.position.x;
         float y = gameObject.transform.position.y;
-        Vector2 position = new Vector2(x,y);
+        Vector2 position = new Vector2(x, y);
 
-        Vector2 distance = position - destination;   
-             
+        Vector2 distance = position - destination;
         float angle = Utilities.getAngleDegBetween(distance.y, distance.x) - 90;
+
         gameObject.transform.eulerAngles = new Vector3(0f, 0f, angle);
+        base.updateHealthBar();
 
     }
     

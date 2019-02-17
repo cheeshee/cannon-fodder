@@ -70,8 +70,9 @@ public class ICharacter : MonoBehaviour {
 
     public void updateHealthBar()
     {
-
         healthBar.transform.localScale = new Vector3(healthPoints / maxHealth * 2, 0.2f, 1);
+        healthBar.transform.forward = new Vector3(0f, 0f, 0f);
+        healthBar.transform.position = transform.position + new Vector3(0f, 0.35f, 0f);
 
     }
 

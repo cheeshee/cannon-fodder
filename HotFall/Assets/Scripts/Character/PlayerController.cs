@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Health")]
     [SerializeField]
-    public float healthPoints;
+    public float healthPoints = 10;
     [SerializeField]
     public GameObject healthBar;
 
