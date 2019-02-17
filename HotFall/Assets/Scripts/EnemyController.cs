@@ -94,14 +94,15 @@ public class EnemyController : ICharacter, IPooledObject {
         base.decrementHealth(damage);
         if (!isHealthZero())
         {
-           // runAnimation(ANIMATION_DAMAGED);
+            // runAnimation(ANIMATION_DAMAGED);
         }
     }
 
     protected override void onDeath()
     {
-       // runAnimation(ANIMATION_DEATH);
-       // agent.enabled = false;
+        gameObject.SetActive(false);
+        // runAnimation(ANIMATION_DEATH);
+        // agent.enabled = false;
         //Invoke("completeDeathAnimation", 1.5f);
 
     }
