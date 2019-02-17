@@ -32,6 +32,7 @@ public class EnemyController : ICharacter, IPooledObject {
        
         healthPoints = maxHealth;
         base.updateHealthBar();
+        updateSpriteDirection();
 
     }
 
@@ -40,7 +41,7 @@ public class EnemyController : ICharacter, IPooledObject {
         setSpeed();
         updateDestination();
         move();
-        //updateSpriteDirection();
+        updateSpriteDirection();
     }
 
 
@@ -75,13 +76,21 @@ public class EnemyController : ICharacter, IPooledObject {
         this.destination = player.transform.position;
     }
 
-    /*
+    
     void updateSpriteDirection()
     {
-        // not sure if this is right
-        transform.localScale = gameObject.transform.position;
+        
+        float x = gameObject.transform.position.x;
+        float y = gameObject.transform.position.y;
+        Vector2 position = new Vector2(x,y);
+
+        Vector2 distance = position - destination;   
+             
+        float angle = Utilities.getAngleDegBetween(distance.y, distance.x) - 90;
+        gameObject.transform.eulerAngles = new Vector3(0f, 0f, angle);
+
     }
-    */
+    
     #endregion
 
     #region LifeDeath
