@@ -2,12 +2,12 @@
 
 public class EnemyController : ICharacter, IPooledObject {
 
-    const string ANIMATION_DEATH = "Death";
-    const string ANIMATION_DAMAGED = "Damaged";
+    protected const string ANIMATION_DEATH = "Death";
+    protected const string ANIMATION_DAMAGED = "Damaged";
 
     protected GameObject player;
     [SerializeField]
-    protected float meleeDamage = 10;
+    protected float meleeDamage = 1;
     [SerializeField]
     protected float speedMultiplier = 1;
     [SerializeField]
@@ -17,19 +17,8 @@ public class EnemyController : ICharacter, IPooledObject {
 
     float step;
 
-    protected void OnTriggerEnter2D(Collider2D col)
-    {
-        int damage = 1;
 
-        GameObject hitTarget = col.gameObject;
-        if (hitTarget.tag == Tags.PLAYER)
-        {
-            Debug.Log("Ouch that hurt");
-            gameObject.SetActive(false);
-            hitTarget.GetComponent<PlayerController>().decrementHealth(damage);
 
-        }
-    }
 
 
     protected override void Awake()
@@ -38,9 +27,10 @@ public class EnemyController : ICharacter, IPooledObject {
         player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
     }
 
-    public void OnObjectSpawn()
+    public virtual void OnObjectSpawn()
     {
-        base.healthPoints = base.maxHealth;
+       
+        healthPoints = maxHealth;
         base.updateHealthBar();
 
     }
@@ -57,32 +47,32 @@ public class EnemyController : ICharacter, IPooledObject {
 
 
     #region Motion
-    void setSpeed()
+    protected void setSpeed()
     {
         if (isWithinSpeedUp())
         {
             float speedIncrease = base.speedModifier * (speedMultiplier * player.GetComponent<Rigidbody2D>().velocity.magnitude);
-            step = Mathf.Min(speedIncrease * Time.deltaTime, maximumSpeedMultiplier * base.SpeedModifier() * Time.deltaTime);
+            step = Mathf.Min(speedIncrease * Time.deltaTime, maximumSpeedMultiplier * base.MoveSpeed() * Time.deltaTime);
         }
         else
         {
-            step = base.SpeedModifier() * Time.deltaTime;
+            step = MoveSpeed() * Time.deltaTime;
         }
     }
 
-    private void move()
+    protected virtual void move()
     {
         transform.position = Vector2.MoveTowards(transform.position, destination, step);
     }
 
-    private bool isWithinSpeedUp()
+    protected bool isWithinSpeedUp()
     {
         return Vector3.Distance(player.transform.position, transform.position) - player.GetComponent<CircleCollider2D>().radius <= player.GetComponent<PlayerController>().getSpeedUpRange();
     }
 
-    public virtual void updateDestination()
+    protected virtual void updateDestination()
     {
-        destination = player.transform.position;
+        this.destination = player.transform.position;
     }
 
     /*
@@ -98,9 +88,10 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected override void onDeath()
     {
+        gameObject.SetActive(false);
         onCharacterDeath(this);
 
-        gameObject.SetActive(false);
+        
         
         // runAnimation(ANIMATION_DEATH);
         //Invoke("completeDeathAnimation", 1.5f);
@@ -113,13 +104,15 @@ public class EnemyController : ICharacter, IPooledObject {
     }
 
 
-    void OnCollisionStay2D(Collision2D other)
+    protected void OnTriggerEnter2D(Collider2D col)
     {
-        GameObject player = other.gameObject;
-
-        if (player.tag == Tags.PLAYER)
+        GameObject hitTarget = col.gameObject;
+        if (hitTarget.tag == Tags.PLAYER)
         {
-            //player.GetComponent<ICharacter>().damagedByAttacker(meleeDamage);
+            //Debug.Log("Ouch that hurt");
+            onDeath();
+            hitTarget.GetComponent<PlayerController>().decrementHealth(meleeDamage);
+
         }
     }
 

@@ -7,61 +7,39 @@ public class SpiralShooterController : EnemyController
 
 
     [SerializeField]
-    float angle, radius = 10;
-
-    [SerializeField]
     float angleSpeed = 2;
 
     [SerializeField]
     float radialSpeed = 10;
 
-    bool isWithinSpeedUp = false;
     float initialAngle;
     float initialRadius;
 
+    float angle, radius;
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-
-    }
-
-    public void OnObjectSpawn()
+    public override void OnObjectSpawn()
     {
 
         base.OnObjectSpawn();
-        float quadrant = 0.0f;
-
-        initialAngle = Mathf.Atan(transform.position.y / transform.position.x);
-
-        if (transform.position.y >= 0 && transform.position.x <= 0)
+        if (transform.position.x == 0)
         {
-            quadrant = 90;
+            angle = 90;
         }
-        else if (transform.position.y <= 0 && transform.position.x <= 0)
+        else
         {
-            quadrant = 180;
-        }
-        else if (transform.position.y <= 0 && transform.position.x >= 0)
-        {
-            quadrant = 270;
+            initialAngle = Mathf.Atan(transform.position.y / transform.position.x);
         }
 
-        quadrant = Mathf.Deg2Rad * quadrant;
-
-        initialAngle = initialAngle + quadrant;
-
-        radius = Mathf.Sqrt(transform.position.x * transform.position.x + transform.position.y * transform.position.y);
-        player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
-        destination = player.transform.position;
-        setSpeed();
+        Vector3 dirVector = transform.position - player.transform.position;
+        Debug.Log(dirVector);
+        radius = 20;
     }
 
     protected override void FixedUpdate()
     {
-        destination = player.transform.position;
-        speedUpIfNeeded();
+        //Debug.Log(destination);
+        updateDestination();
+        move();
         //updateSpriteDirection();
     }
 
@@ -69,64 +47,31 @@ public class SpiralShooterController : EnemyController
 
     void spiral(float step)
     {
-        //angle, radius = 10;
-        //angleSpeed = 2;
-        //radialSpeed = 0.5f;
-        
-        angle += Time.deltaTime * angleSpeed + angleSpeed * step;
-        //radius = Vector2.Distance(player.transform.position, transform.position);
-        radius = Mathf.Max(0, radius - Time.deltaTime);
+        angle += (Time.deltaTime + step) * angleSpeed;
 
-        
+        radius = Mathf.Max(0, radius - radialSpeed * Time.deltaTime);
+        //sDebug.Log(radius);
 
-        float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle + initialAngle);
+        float x = radius * Mathf.Cos(angle + initialAngle);
         float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle + initialAngle);
 
-        step = base.SpeedModifier() * Time.deltaTime;
-
-        transform.position = new Vector2(x + player.transform.position.x, y + player.transform.position.y);
-        
+        transform.position = new Vector2(destination.x - x,destination.y - y);
     }
 
 
-    void setSpeed()
+
+    protected override void move()
     {
-        //step = base.SpeedModifier() * Time.deltaTime;
-        //transform.position = Vector2.MoveTowards(transform.position, destination, step);
-        spiral(0);
-    }
-
-    /*public override void modifySpeed(float mod, float time)
-    {
-        base.modifySpeed(mod, time);
-        setSpeed();
-    }*/
-
-
-
-    protected virtual void speedUpIfNeeded()
-    {
-        if (Vector2.Distance(player.transform.position, transform.position) - player.GetComponent<CircleCollider2D>().radius <= player.GetComponent<PlayerController>().getSpeedUpRange())
+        if (isWithinSpeedUp())
         {
-            speedUp();
+            spiral(0.01f * player.GetComponent<Rigidbody2D>().velocity.magnitude);
         }
         else
         {
-            setSpeed();
+            spiral(0);
         }
     }
 
-    protected virtual void speedUp()
-    {
-        //time variable is for cool down, which is nothing rn
-        //float fastSpeed = base.moveSpeed * player.GetComponent<ICharacter>().SpeedModifier();    //player.gameObject.GetComponent<ICharacter>().SpeedModifier();
-        //base.modifySpeed(fastSpeed, 0);
-        //agent.maxSpeed = agent.maxSpeed * base.speedModifier;
-        //speedIncrease = base.speedModifier + player.GetComponent<Rigidbody2D>().velocity.magnitude;
-        //step = speedIncrease * Time.deltaTime;
-        //transform.position = Vector2.MoveTowards(transform.position, destination, step);
-        spiral(0.01f * player.GetComponent<Rigidbody2D>().velocity.magnitude);
-    }
 
     void updateSpriteDirection()
     {
@@ -135,49 +80,4 @@ public class SpiralShooterController : EnemyController
     }
     #endregion
 
-
-    #region LifeDeath
-    public override void decrementHealth(float damage)
-    {
-        base.decrementHealth(damage);
-        if (!isHealthZero())
-        {
-            //runAnimation(ANIMATION_DAMAGED);
-        }
-    }
-
-    protected override void onDeath()
-    {
-        gameObject.SetActive(false);
-        // runAnimation(ANIMATION_DEATH);
-        // agent.enabled = false;
-        //Invoke("completeDeathAnimation", 1.5f);
-    }
-
-    void runAnimation(string name)
-    {
-        //GetComponent<Animator>().SetTrigger(name);
-    }
-
-    public void completeDeathAnimation()
-    {
-        gameObject.SetActive(false);
-        if (onCharacterDeath != null)
-        {
-            onCharacterDeath(this);
-        }
-        onCharacterDeath = null;
-    }
-
-    void OnCollisionStay2D(Collision2D other)
-    {
-        GameObject player = other.gameObject;
-
-        if (player.tag == Tags.PLAYER)
-        {
-            //player.GetComponent<ICharacter>().damagedByAttacker(meleeDamage);
-        }
-    }
-
-    #endregion
 }

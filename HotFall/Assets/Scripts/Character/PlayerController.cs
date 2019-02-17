@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     public virtual void decrementHealth(float damage)
     {
         healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
-        Debug.Log(healthPoints);
+        //Debug.Log(healthPoints);
         updateHealthBar();
         if (isHealthZero())
         {
