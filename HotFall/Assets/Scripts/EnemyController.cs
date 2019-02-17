@@ -92,18 +92,11 @@ public class EnemyController : ICharacter, IPooledObject {
     #endregion
 
     #region LifeDeath
-    public override void decrementHealth(float damage)
-    {
-        base.decrementHealth(damage);
-        if (!isHealthZero())
-        {
-            // runAnimation(ANIMATION_DAMAGED);
-        }
-    }
 
     protected override void onDeath()
     {
-        onCharacterDeath();
+        onCharacterDeath(this);
+
         gameObject.SetActive(false);
         
         // runAnimation(ANIMATION_DEATH);
@@ -117,14 +110,6 @@ public class EnemyController : ICharacter, IPooledObject {
         //GetComponent<Animator>().SetTrigger(name);
     }
 
-    public void completeDeathAnimation()
-    {
-        gameObject.SetActive(false);
-        if (onCharacterDeath != null) {
-            onCharacterDeath();
-        }
-        onCharacterDeath = null;
-    }
 
     void OnCollisionStay2D(Collision2D other)
     {

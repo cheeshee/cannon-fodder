@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ICharacter : MonoBehaviour {
 
-    public delegate void CharacterDelegate();
+    public delegate void CharacterDelegate(ICharacter character);
     public CharacterDelegate onCharacterDeath;
 
     [Header("Movement")]
@@ -86,12 +86,12 @@ public class ICharacter : MonoBehaviour {
     public virtual void decrementHealth(float damage)
     {
         healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
-
+        updateHealthBar();
         if (isHealthZero())
         {
             onDeath();
         }
-        updateHealthBar();
+        
     }
 
     public void updateHealthBar()
@@ -106,7 +106,7 @@ public class ICharacter : MonoBehaviour {
 
     protected virtual void onDeath()
     {
-        onCharacterDeath();
+        onCharacterDeath(this);
     }
 
 

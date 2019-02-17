@@ -27,8 +27,6 @@ public class SpawnManager : MonoBehaviour {
 
     private int totalEnemiesSpawned = 0;
 
-    private bool isRespawning = true;
-
 
     private void Awake()
     {
@@ -43,7 +41,8 @@ public class SpawnManager : MonoBehaviour {
 
     bool isSpawnNeeded()
     {
-        return  currentActiveEnemies < maxActiveEnemySpawned && isRespawning;
+        
+        return  currentActiveEnemies < maxActiveEnemySpawned;
     }
 
 
@@ -61,12 +60,16 @@ public class SpawnManager : MonoBehaviour {
 
     void setupEnemy(EnemyController enemy)
     {
-        if (totalEnemiesSpawned < 3)
-        {
-            enemy.onCharacterDeath += enemyOnDeath;
-        }
-        enemy.OnObjectSpawn();
         totalEnemiesSpawned++;
+        enemy.OnObjectSpawn();
+  
+            enemy.onCharacterDeath += enemyOnDeath;
+       
+       
+        Debug.Log(enemy.onCharacterDeath);
+
+        
+     
     }
 
     Vector3 getSpawnPosition()
@@ -132,10 +135,12 @@ public class SpawnManager : MonoBehaviour {
     }
 
     #region Delegate
-    void enemyOnDeath()
+    void enemyOnDeath(ICharacter character)
     {
-        Debug.Log("DIE");
+        Debug.Log("DIE" + currentActiveEnemies);
         currentActiveEnemies--;
+        character.onCharacterDeath -= enemyOnDeath;
+            
     }
     #endregion
 
