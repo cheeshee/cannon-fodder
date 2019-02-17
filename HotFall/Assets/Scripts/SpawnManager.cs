@@ -89,12 +89,9 @@ public class SpawnManager : MonoBehaviour {
         float accumulatedChance = accumulatedMonsterChances();
         foreach (Enemies m in monstersToSpawn)
         {
-            Debug.Log(rate);
             rate -= m.percentage / accumulatedChance;
-            Debug.Log(rate);
             if (rate <= 0)
             {
-                Debug.Log(convertEnumToString(m.tag));
                 chosenMonster = m.tag;
                 break;
             }
@@ -139,7 +136,6 @@ public class SpawnManager : MonoBehaviour {
     #region Delegate
     void enemyOnDeath(ICharacter character)
     {
-        Debug.Log("DIE" + currentActiveEnemies);
         currentActiveEnemies--;
         character.onCharacterDeath -= enemyOnDeath;
             

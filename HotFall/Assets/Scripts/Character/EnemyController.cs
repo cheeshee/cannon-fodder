@@ -122,7 +122,7 @@ public class EnemyController : ICharacter, IPooledObject {
         GameObject hitTarget = col.gameObject;
         if (hitTarget.tag == Tags.PLAYER)
         {
-            //Debug.Log("Ouch that hurt");
+            Debug.Log(this.name);
             onDeath();
             hitTarget.GetComponent<PlayerController>().decrementHealth(meleeDamage);
 

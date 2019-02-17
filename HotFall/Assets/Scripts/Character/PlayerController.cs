@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float healthPoints = 10;
     [SerializeField]
     public GameObject healthBar;
+    [SerializeField]
+    private readonly float InvulnDuration = 1;
 
     public float maxHealth;
 
@@ -25,12 +27,14 @@ public class PlayerController : MonoBehaviour
     private Animator animate;
 
     bool delayFlag = false;
+    bool isInvuln;
 
     // Use this for initialization
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         animate = GetComponent<Animator>();
+        isInvuln = false;
     }
 
 
@@ -45,15 +49,31 @@ public class PlayerController : MonoBehaviour
     #region Health
 
     public virtual void decrementHealth(float damage)
-    {
-        healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
-        //Debug.Log(healthPoints);
-        updateHealthBar();
-        if (isHealthZero())
+    {   
+        if (!isInvuln)
         {
-            onDeath();
+            healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
+            //Debug.Log(healthPoints);
+            updateHealthBar();
+            if (isHealthZero())
+            {
+                onDeath();
+            }
+            else
+            {
+                isInvuln = true;
+                StartCoroutine(InvulnerabilityCoroutine());
+            }
         }
 
+    }
+
+    private IEnumerator InvulnerabilityCoroutine()
+    {
+        yield return new WaitForSeconds(InvulnDuration);
+
+        isInvuln = false;
+        yield return null;
     }
 
     public void updateHealthBar()
