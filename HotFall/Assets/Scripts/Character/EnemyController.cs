@@ -80,7 +80,7 @@ public class EnemyController : ICharacter, IPooledObject {
     }
 
     
-    void updateSpriteDirection()
+    protected void updateSpriteDirection()
     {
 
         float x = gameObject.transform.position.x;

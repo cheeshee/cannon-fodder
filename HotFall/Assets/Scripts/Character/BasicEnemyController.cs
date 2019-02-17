@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class BasicEnemyController : EnemyController
 {
+
+
+    public override void OnObjectSpawn()
+    {
+
+        base.OnObjectSpawn();
+        destination = new Vector2(-transform.position.x, -transform.position.y);
+
+    }
+
+
     protected override void updateDestination()
     {
-        base.destination = new Vector2(0f, 0f);
+        return;
     }
 }
