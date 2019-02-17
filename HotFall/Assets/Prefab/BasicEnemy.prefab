@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 7935908451336084756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.25, y: 3.1, z: -0.019957505}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.3}
   m_Children:
   - {fileID: 7935908451258835319}
   m_Father: {fileID: 0}
@@ -201,9 +201,7 @@ MonoBehaviour:
   healthPoints: 100
   healthBar: {fileID: 7935908451258835317}
   maxHealth: 100.09
-  meleeDamage: 10
-  speedIncrease: 4
-  destination: {x: 0, y: 0}
+  speedMultiplier: 0.5
 --- !u!61 &7935908451336084758
 BoxCollider2D:
   m_ObjectHideFlags: 0
