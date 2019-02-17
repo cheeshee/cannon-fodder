@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : ICharacter
+public class PlayerController : MonoBehaviour
 {
 
 
@@ -14,7 +14,7 @@ public class PlayerController : ICharacter
 
     private Rigidbody2D playerRigidbody;
     private Animator animate;
-    
+
     // Use this for initialization
     void Start()
     {
