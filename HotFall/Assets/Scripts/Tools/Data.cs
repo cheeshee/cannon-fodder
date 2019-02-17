@@ -12,4 +12,5 @@ public struct Pool
     public static readonly string DOCTOR = "Doctor";
     public static readonly string BULLET = "Bullet";
     public static readonly string ENEMY_BULLET = "Enemy Bullet";
+    public static readonly string ENEMY = "Enemy";
 } 
