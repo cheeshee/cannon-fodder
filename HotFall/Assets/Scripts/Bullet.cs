@@ -32,23 +32,24 @@ public class Bullet : IProjectile, IPooledObject
         GameObject hitTarget = col.gameObject;
         if (hitTarget.tag == Tags.ENEMY)
         {
+            Debug.Log("HIT");
             hitTarget.GetComponent<ICharacter>().decrementHealth(damage);
             gameObject.SetActive(false);
         }
 
         base.OnTriggerEnter2D(col);
     }
-/*
-    protected override void onSpellHitObject()
+
+    protected override void onHitObject()
     {
         isMoving = false;
-        GetComponent<Animator>().SetTrigger(ANIMATION_EXPLOSION);
-        Invoke("onFinishExplosionAnimation", EXPLOSION_ANIMATION_TIME);
+        //GetComponent<Animator>().SetTrigger(ANIMATION_EXPLOSION);
+        //Invoke("onFinishExplosionAnimation", EXPLOSION_ANIMATION_TIME);
     }
 
     void onFinishExplosionAnimation()
     {
         gameObject.SetActive(false);
     }
-*/
+
 }

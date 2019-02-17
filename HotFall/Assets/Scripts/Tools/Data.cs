@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public struct Tags  {
     public static readonly string PLAYER = "Player";
     public static readonly string ENEMY = "Enemy";
-    public static readonly string SOLID_OBSTACLE = "SolidObstacle";
+    public static readonly string OBSTACLE = "Obstacle";
 }
 
 public struct Pool

@@ -6,52 +6,51 @@ public class EnemyController : ICharacter, IPooledObject {
     const string ANIMATION_DEATH = "Death";
     const string ANIMATION_DAMAGED = "Damaged";
 
-    protected PolyNavAgent agent;
     protected GameObject player;
 
     [SerializeField]
     protected float meleeDamage = 10;
 
     [SerializeField]
-    protected float speedUpRange = 4;
+    protected float speedIncrease = 4;
 
     [SerializeField]
     protected Vector2 destination = new Vector2(0, 0);
 
     bool isWithinSpeedUp = false;
-    
+    float step;
+
+
     protected override void Awake()
     {
         base.Awake();
         player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
-        agent = GetComponent<PolyNavAgent>();
         setSpeed();
     }
 
     public void OnObjectSpawn()
     {
         setSpeed();
-        agent.enabled = true;
-        agent.SetDestination(destination);
     }
 
     protected virtual void FixedUpdate()
     {
         speedUpIfNeeded();
-        updateSpriteDirection();
+        //updateSpriteDirection();
     }
 
     #region Motion
     void setSpeed()
     {
-        agent.maxSpeed = base.moveSpeed * base.speedModifier;
+        step = base.SpeedModifier() * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, destination, step);
     }
 
-    public override void modifySpeed(float mod, float time)
+    /*public override void modifySpeed(float mod, float time)
     {
         base.modifySpeed(mod, time);
         setSpeed();
-    }
+    }*/
 
     protected override void resetSpeedCoolDown()
     {
@@ -62,38 +61,30 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected virtual void speedUpIfNeeded()
     {
-        if (player == null)
-        {
-            agent.enabled = false;
-        }
-        else
-        {
-            if (Vector3.Distance(player.transform.position, transform.position) <= this.speedUpRange)
+            if (Vector3.Distance(player.transform.position, transform.position) - player.GetComponent<CircleCollider2D>().radius <= player.GetComponent<PlayerController>().getSpeedUpRange())
             {
                 speedUp();
             } else
             {
                 setSpeed();
             }
-        }
     }
 
     protected virtual void speedUp()
     {
         //time variable is for cool down, which is nothing rn
-        float fastSpeed = base.moveSpeed * player.GetComponent<ICharacter>().SpeedModifier();    //player.gameObject.GetComponent<ICharacter>().SpeedModifier();
-        modifySpeed(fastSpeed, 0);
+        //float fastSpeed = base.moveSpeed * player.GetComponent<ICharacter>().SpeedModifier();    //player.gameObject.GetComponent<ICharacter>().SpeedModifier();
+        //base.modifySpeed(fastSpeed, 0);
+        //agent.maxSpeed = agent.maxSpeed * base.speedModifier;
+        speedIncrease = base.speedModifier + player.GetComponent<Rigidbody2D>().velocity.magnitude;
+        step = speedIncrease * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, destination, step);
     }
 
     void updateSpriteDirection()
     {
-        if (agent.movingDirection.x > 0)
-        {
-           // transform.localScale = new Vector3(-1, 1, 1);
-        } else
-        {
-           // transform.localScale = Vector3.one;
-        }
+        // not sure if this is right
+        transform.localScale = gameObject.transform.position;
     }
     #endregion
 
@@ -103,20 +94,21 @@ public class EnemyController : ICharacter, IPooledObject {
         base.decrementHealth(damage);
         if (!isHealthZero())
         {
-            runAnimation(ANIMATION_DAMAGED);
+           // runAnimation(ANIMATION_DAMAGED);
         }
     }
 
     protected override void onDeath()
     {
-        runAnimation(ANIMATION_DEATH);
-        agent.enabled = false;
-        Invoke("completeDeathAnimation", 1.5f);
+       // runAnimation(ANIMATION_DEATH);
+       // agent.enabled = false;
+        //Invoke("completeDeathAnimation", 1.5f);
+
     }
 
     void runAnimation(string name)
     {
-        GetComponent<Animator>().SetTrigger(name);
+        //GetComponent<Animator>().SetTrigger(name);
     }
 
     public void completeDeathAnimation()
@@ -134,7 +126,7 @@ public class EnemyController : ICharacter, IPooledObject {
 
         if (player.tag == Tags.PLAYER)
         {
-            player.GetComponent<ICharacter>().damagedByAttacker(meleeDamage);
+            //player.GetComponent<ICharacter>().damagedByAttacker(meleeDamage);
         }
     }
 
@@ -145,7 +137,7 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, speedUpRange);
+        Gizmos.DrawWireSphere(transform.position, player.GetComponent<PlayerController>().getSpeedUpRange());
     }
     #endregion
 }
