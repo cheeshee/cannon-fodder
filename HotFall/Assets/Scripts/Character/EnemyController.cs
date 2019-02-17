@@ -14,6 +14,20 @@ public class EnemyController : ICharacter, IPooledObject {
 
     float step;
 
+    protected void OnTriggerEnter2D(Collider2D col)
+    {
+        int damage = 1;
+
+        GameObject hitTarget = col.gameObject;
+        if (hitTarget.tag == Tags.PLAYER)
+        {
+            Debug.Log("Ouch that hurt");
+            gameObject.SetActive(false);
+            hitTarget.GetComponent<PlayerController>().decrementHealth(damage);
+
+        }
+    }
+
 
     protected override void Awake()
     {

@@ -1,9 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    [Header("Health")]
+    [SerializeField]
+    public float healthPoints;
+    [SerializeField]
+    public GameObject healthBar;
+
+    public float maxHealth;
 
 
     [SerializeField]
@@ -32,6 +41,37 @@ public class PlayerController : MonoBehaviour
         SpriteRotation(direction);
         activateBullet(direction);
     }
+
+    #region Health
+
+    public virtual void decrementHealth(float damage)
+    {
+        healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
+        Debug.Log(healthPoints);
+        updateHealthBar();
+        if (isHealthZero())
+        {
+            onDeath();
+        }
+
+    }
+
+    public void updateHealthBar()
+    {
+        healthBar.transform.localScale = new Vector3(1, healthPoints / maxHealth * 1, 1);
+    }
+
+    protected bool isHealthZero()
+    {
+        return healthPoints <= 0;
+    }
+
+    protected virtual void onDeath()
+    {
+        gameObject.SetActive(false);
+    }
+
+    #endregion
 
 
 

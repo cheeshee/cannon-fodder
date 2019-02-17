@@ -202,6 +202,7 @@ MonoBehaviour:
   healthBar: {fileID: 7935908451258835317}
   maxHealth: 100.09
   speedMultiplier: 0.5
+  destination: {x: 0, y: 0}
 --- !u!61 &7935908451336084758
 BoxCollider2D:
   m_ObjectHideFlags: 0
