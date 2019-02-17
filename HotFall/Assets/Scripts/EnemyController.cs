@@ -131,5 +131,5 @@ public class EnemyController : ICharacter, IPooledObject {
     }
 
     #endregion
-    
+
 }
