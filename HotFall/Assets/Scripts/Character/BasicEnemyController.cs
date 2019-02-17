@@ -14,6 +14,11 @@ public class BasicEnemyController : EnemyController
 
     }
 
+    void OnBecameInvisible()
+    {       
+       gameObject.SetActive(false);
+       onDeath();
+    }
 
     protected override void updateDestination()
     {

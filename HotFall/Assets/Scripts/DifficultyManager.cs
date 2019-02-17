@@ -14,7 +14,7 @@ public class DifficultyManager : MonoBehaviour
     {
         SpawnScript = Spawner.GetComponent<SpawnManager>();
         SpawnManager.Enemies yes = SpawnScript.monstersToSpawn[0];
-        yes.percentage = 10;
+        yes.percentage = 0;
     }
 
     // Update is called once per frame
