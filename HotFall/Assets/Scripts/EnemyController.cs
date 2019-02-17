@@ -137,8 +137,8 @@ public class EnemyController : ICharacter, IPooledObject {
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, player.GetComponent<PlayerController>().getSpeedUpRange());
+       // Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, player.GetComponent<PlayerController>().getSpeedUpRange());
     }
     #endregion
 }
