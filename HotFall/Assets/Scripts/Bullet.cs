@@ -37,8 +37,10 @@ public class Bullet : IProjectile, IPooledObject
             
         }
 
+
         base.OnTriggerEnter2D(col);
     }
+
 
     protected override void onHitObject()
     {

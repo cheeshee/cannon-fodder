@@ -97,9 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   invulnerableTimer: 0
-  healthPoints: 100
+  healthPoints: 20
   healthBar: {fileID: 2292336626158838097}
-  maxHealth: 100
+  maxHealth: 20
   meleeDamage: 1
   speedMultiplier: 1
   maximumSpeedMultiplier: 3

@@ -149,7 +149,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1881330013
-  m_SortingLayer: -4
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 90de310eedfe34f4ab4386204f49ad11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -197,9 +197,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
   invulnerableTimer: 0
-  healthPoints: 100
+  healthPoints: 60
   healthBar: {fileID: 6468734434663931471}
-  maxHealth: 100
+  maxHealth: 60
   meleeDamage: 1
   speedMultiplier: 0.5
   maximumSpeedMultiplier: 3

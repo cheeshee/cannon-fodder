@@ -148,6 +148,11 @@ public class SpawnManager : MonoBehaviour {
     {
         maxActiveEnemySpawned = i;
     }
+
+    public void setEnemiesPercent(int i, float percent)
+    {
+        monstersToSpawn[i].percentage = percent;
+    }
     #endregion
 
     #region Debug
