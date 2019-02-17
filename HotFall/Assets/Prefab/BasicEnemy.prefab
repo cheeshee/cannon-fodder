@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7935908451336084758}
   - component: {fileID: 7935908451336084759}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: BasicEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,9 +200,10 @@ MonoBehaviour:
   invulnerableTimer: 0
   healthPoints: 100
   healthBar: {fileID: 7935908451258835317}
+  maxHealth: 100.09
   meleeDamage: 10
   speedIncrease: 4
-  destination: {x: -15, y: -6}
+  destination: {x: 0, y: 0}
 --- !u!61 &7935908451336084758
 BoxCollider2D:
   m_ObjectHideFlags: 0

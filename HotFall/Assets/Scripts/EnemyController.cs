@@ -30,6 +30,9 @@ public class EnemyController : ICharacter, IPooledObject {
 
     public void OnObjectSpawn()
     {
+        Debug.Log("SPAWN");
+        base.healthPoints = base.maxHealth;
+        base.updateHealthBar();
         setSpeed();
     }
 
@@ -100,7 +103,9 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected override void onDeath()
     {
+        onCharacterDeath();
         gameObject.SetActive(false);
+        
         // runAnimation(ANIMATION_DEATH);
         // agent.enabled = false;
         //Invoke("completeDeathAnimation", 1.5f);
@@ -133,12 +138,4 @@ public class EnemyController : ICharacter, IPooledObject {
 
     #endregion
 
-    #region Gizmo
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, player.GetComponent<PlayerController>().getSpeedUpRange());
-    }
-    #endregion
 }

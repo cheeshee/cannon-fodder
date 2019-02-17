@@ -22,11 +22,11 @@ public class ICharacter : MonoBehaviour {
 
     [Header("Health")]
     [SerializeField]
-    float healthPoints;
+    public float healthPoints;
     [SerializeField]
     public GameObject healthBar;
 
-    private float maxHealth;
+    public float maxHealth;
 
     #region Getter
     public float MoveSpeed()
@@ -43,7 +43,7 @@ public class ICharacter : MonoBehaviour {
     #region Mono
     protected virtual void Awake()
     {
-        maxHealth = healthPoints;
+        healthPoints = maxHealth;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
@@ -94,7 +94,7 @@ public class ICharacter : MonoBehaviour {
         updateHealthBar();
     }
 
-    private void updateHealthBar()
+    public void updateHealthBar()
     {
         healthBar.transform.localScale = new Vector3(healthPoints / maxHealth * 50, 1, 1);
     }
