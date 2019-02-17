@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PolyNavAgent))]
 public class EnemyController : ICharacter, IPooledObject {
 
     const string ANIMATION_DEATH = "Death";
@@ -8,12 +7,13 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected GameObject player;
 
+    protected Vector2 destination;
+
     [SerializeField]
     protected float meleeDamage = 10;
 
     [SerializeField]
     protected float speedIncrease = 4;
-
 
     private Vector2 destination;
 
@@ -93,7 +93,7 @@ public class EnemyController : ICharacter, IPooledObject {
         
         // runAnimation(ANIMATION_DEATH);
         //Invoke("completeDeathAnimation", 1.5f);
-
+        
     }
 
     void runAnimation(string name)
