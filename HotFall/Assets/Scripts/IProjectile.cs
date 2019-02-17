@@ -5,14 +5,14 @@ public abstract class IProjectile : MonoBehaviour
 {
 
     [SerializeField] float velocity;
-    [SerializeField] protected float spellMovementTimeToLive;
+    //[SerializeField] protected float spellMovementTimeToLive;
     [SerializeField] protected float damage;
 
     protected float angle;
     //protected float currentTimeToLive; //currentDuration
     protected bool isMoving = true;
 
-    protected string[] listOfObstacleTags = {Tags.ENEMY, Tags.SOLID_OBSTACLE};
+    protected string[] listOfObstacleTags = {Tags.ENEMY, Tags.OBSTACLE};
 
     // Update is called once per frame
     protected virtual void Update()
@@ -32,10 +32,10 @@ public abstract class IProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
-        checkIfSpellHitObject(col.tag);
+        checkIfHitObject(col.tag);
     }
 
-    void checkIfSpellHitObject(string tag)
+    void checkIfHitObject(string tag)
     {
         for (int i = 0; i < listOfObstacleTags.Length; i++)
         {
@@ -46,7 +46,7 @@ public abstract class IProjectile : MonoBehaviour
         }
     }
 
-    //protected abstract void onSpellHitObject();
+    protected abstract void onHitObject();
 
     //protected abstract void onMovementTimeToLiveStopped();
 
