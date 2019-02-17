@@ -5,13 +5,34 @@ using UnityEngine;
 public class SpiralShooterController : EnemyController
 {
 
+
     [SerializeField]
-    float approachSpeed = 50;
-    
+    float angleSpeed = 2;
+
+    [SerializeField]
+    float radialSpeed = 10;
+
+    float initialAngle;
+    float initialRadius;
+
+    float angle, radius;
+
     public override void OnObjectSpawn()
     {
+
         base.OnObjectSpawn();
-        transform.LookAt(base.player.transform);
+        if (transform.position.x == 0)
+        {
+            angle = 90;
+        }
+        else
+        {
+            initialAngle = Mathf.Atan(transform.position.y / transform.position.x);
+        }
+
+        Vector3 dirVector = transform.position - player.transform.position;
+        Debug.Log(dirVector);
+        radius = 20;
     }
 
     protected override void FixedUpdate()
@@ -19,31 +40,44 @@ public class SpiralShooterController : EnemyController
         //Debug.Log(destination);
         updateDestination();
         move();
-        updateSpriteDirection();
+        //updateSpriteDirection();
     }
 
     #region Motion
 
     void spiral(float step)
     {
+        angle += (Time.deltaTime + step) * angleSpeed;
 
-        transform.Translate(transform.right * Time.deltaTime * 0.1f * step);
-        transform.RotateAround((player.transform.position + transform.position)/2, new Vector3(0,0,1), step * 10 * Time.deltaTime);
+        radius = Mathf.Max(0, radius - radialSpeed * Time.deltaTime);
+        //sDebug.Log(radius);
 
+        float x = radius * Mathf.Cos(angle + initialAngle);
+        float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle + initialAngle);
+
+        transform.position = new Vector2(destination.x - x,destination.y - y);
     }
+
+
 
     protected override void move()
     {
         if (isWithinSpeedUp())
         {
-            spiral(approachSpeed  * player.GetComponent<Rigidbody2D>().velocity.magnitude);
+            spiral(0.01f * player.GetComponent<Rigidbody2D>().velocity.magnitude);
         }
         else
         {
-            spiral(approachSpeed);
+            spiral(0);
         }
     }
-    
+
+
+    void updateSpriteDirection()
+    {
+        // not sure if this is right
+        transform.localScale = gameObject.transform.position;
+    }
     #endregion
 
 }
