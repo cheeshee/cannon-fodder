@@ -12,9 +12,6 @@ public class EnemyController : ICharacter, IPooledObject {
     protected float meleeDamage = 10;
 
     [SerializeField]
-    protected float speedUpRange = 6;
-
-    [SerializeField]
     protected float speedIncrease = 4;
 
     [SerializeField]
@@ -64,7 +61,7 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected virtual void speedUpIfNeeded()
     {
-            if (Vector3.Distance(player.transform.position, transform.position) <= this.speedUpRange + this.GetComponent<BoxCollider2D>().edgeRadius)
+            if (Vector3.Distance(player.transform.position, transform.position) - player.GetComponent<CircleCollider2D>().radius <= player.GetComponent<PlayerController>().getSpeedUpRange())
             {
                 speedUp();
             } else
@@ -79,6 +76,7 @@ public class EnemyController : ICharacter, IPooledObject {
         //float fastSpeed = base.moveSpeed * player.GetComponent<ICharacter>().SpeedModifier();    //player.gameObject.GetComponent<ICharacter>().SpeedModifier();
         //base.modifySpeed(fastSpeed, 0);
         //agent.maxSpeed = agent.maxSpeed * base.speedModifier;
+        speedIncrease = base.speedModifier + player.GetComponent<Rigidbody2D>().velocity.magnitude;
         step = speedIncrease * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, destination, step);
     }
@@ -137,7 +135,7 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, speedUpRange);
+        Gizmos.DrawWireSphere(transform.position, player.GetComponent<PlayerController>().getSpeedUpRange());
     }
     #endregion
 }
