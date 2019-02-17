@@ -32,15 +32,37 @@ public class SpiralShooterController : ICharacter
 
     bool isWithinSpeedUp = false;
     Vector2 playerPos;
-    //float step;
+    float initialAngle;
+    float initialRadius;
 
 
     protected override void Awake()
     {
         base.Awake();
+
+        float quadrant = 0.0f;
+
+        initialAngle = Mathf.Atan(transform.position.y / transform.position.x);
+
+        if(transform.position.y >= 0 && transform.position.x <=0){
+            quadrant = 90;
+        }
+        else if (transform.position.y <= 0 && transform.position.x <= 0)
+        {
+            quadrant = 180;
+        }
+        else if (transform.position.y <= 0 && transform.position.x >= 0)
+        {
+            quadrant = 270;
+        }
+
+        quadrant = Mathf.Deg2Rad * quadrant;
+
+        initialAngle = initialAngle + quadrant;
+
+        radius = Mathf.Sqrt(transform.position.x * transform.position.x + transform.position.y * transform.position.y);
         player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
         destination = player.transform.position;
-        playerPos = player.transform.position;
         setSpeed();
     }
 
@@ -52,7 +74,6 @@ public class SpiralShooterController : ICharacter
     protected virtual void FixedUpdate()
     {
         destination = player.transform.position;
-        playerPos = player.transform.position;
         speedUpIfNeeded();
         //updateSpriteDirection();
     }
@@ -71,8 +92,8 @@ public class SpiralShooterController : ICharacter
 
         
 
-        float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle);
-        float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle);
+        float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle + initialAngle);
+        float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle + initialAngle);
 
         step = base.SpeedModifier() * Time.deltaTime;
 
