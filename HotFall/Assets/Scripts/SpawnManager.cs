@@ -62,11 +62,8 @@ public class SpawnManager : MonoBehaviour {
     {
         totalEnemiesSpawned++;
         enemy.OnObjectSpawn();
-  
-            enemy.onCharacterDeath += enemyOnDeath;
-       
-       
-        Debug.Log(enemy.onCharacterDeath);
+
+        enemy.onCharacterDeath += enemyOnDeath;
 
         
      
@@ -90,13 +87,16 @@ public class SpawnManager : MonoBehaviour {
     {
         ENEMIES chosenMonster = monstersToSpawn[0].tag;
         float accumulatedChance = accumulatedMonsterChances();
-        float percentage = 0;
         foreach (Enemies m in monstersToSpawn)
         {
-            percentage += m.percentage / accumulatedChance;
-            if (percentage <= rate)
+            Debug.Log(rate);
+            rate -= m.percentage / accumulatedChance;
+            Debug.Log(rate);
+            if (rate <= 0)
             {
+                Debug.Log(convertEnumToString(m.tag));
                 chosenMonster = m.tag;
+                break;
             }
         }
 
@@ -118,7 +118,7 @@ public class SpawnManager : MonoBehaviour {
             accumulatedChance += m.percentage;
         }
 
-        return Mathf.Clamp(accumulatedChance, 0.0001f, 1);
+        return accumulatedChance;
     }
 
 
@@ -129,6 +129,8 @@ public class SpawnManager : MonoBehaviour {
         {
             case ENEMIES.BASIC_ENEMY:
                 return Pool.BASIC_ENEMY;
+            case ENEMIES.ZERO_ENEMY:
+                return Pool.ZERO_ENEMY;
             default:
                 return Pool.BASIC_ENEMY;
         }
@@ -158,4 +160,5 @@ public class SpawnManager : MonoBehaviour {
 public enum ENEMIES
 {
     BASIC_ENEMY,
+    ZERO_ENEMY
 }
