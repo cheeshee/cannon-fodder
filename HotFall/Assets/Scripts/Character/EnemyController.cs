@@ -9,6 +9,8 @@ public class EnemyController : ICharacter, IPooledObject {
 
     [SerializeField]
     protected float speedMultiplier = 1;
+    [SerializeField]
+    public float maximumSpeedMultiplier = 3f;
 
     public Vector2 destination;
 
@@ -44,8 +46,8 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         if (isWithinSpeedUp())
         {
-            float speedIncrease = base.speedModifier * (1 + speedMultiplier * player.GetComponent<Rigidbody2D>().velocity.magnitude);
-            step = Mathf.Min(speedIncrease * Time.deltaTime, 3 * base.SpeedModifier() * Time.deltaTime);
+            float speedIncrease = base.speedModifier * (speedMultiplier * player.GetComponent<Rigidbody2D>().velocity.magnitude);
+            step = Mathf.Min(speedIncrease * Time.deltaTime, maximumSpeedMultiplier * base.SpeedModifier() * Time.deltaTime);
         }
         else
         {

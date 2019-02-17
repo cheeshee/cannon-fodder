@@ -21,10 +21,10 @@ public class SpawnManager : MonoBehaviour {
 
     [SerializeField]
     int maxActiveEnemySpawned = 1;
-    [SerializeField]
-    int currentActiveEnemies;
 
 
+
+    private int currentActiveEnemies;
     private int totalEnemiesSpawned = 0;
 
 
