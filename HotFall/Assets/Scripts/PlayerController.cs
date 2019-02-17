@@ -9,6 +9,9 @@ public class PlayerController : ICharacter
     [SerializeField]
     float forceMultipler;
 
+    [SerializeField]
+    protected float speedUpRange = 5;
+
     private Rigidbody2D playerRigidbody;
     private Animator animate;
     
@@ -89,6 +92,11 @@ public class PlayerController : ICharacter
         }
     }
 
+    public float getSpeedUpRange()
+    {
+        return speedUpRange;
+    }
+
     /*
     protected void onDeath()
     {
@@ -100,4 +108,5 @@ public class PlayerController : ICharacter
         onCharacterDeath = null;
     }
     */
+    
 }
