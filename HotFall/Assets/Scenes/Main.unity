@@ -330,7 +330,6 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   meleeDamage: 10
   speedIncrease: 4
-  destination: {x: 0, y: 0}
   angle: 5
   radius: 5
   angleSpeed: 50
@@ -391,7 +390,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248414043}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.16, y: 3.43, z: 0}
+  m_LocalPosition: {x: -8, y: 3.43, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -590,7 +589,6 @@ MonoBehaviour:
   healthBar: {fileID: 811444564}
   meleeDamage: 10
   speedIncrease: 4
-  destination: {x: -15, y: -6}
 --- !u!50 &754472249
 Rigidbody2D:
   serializedVersion: 4

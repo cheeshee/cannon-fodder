@@ -8,6 +8,7 @@ public class SpiralShooterController : ICharacter
     const string ANIMATION_DAMAGED = "Damaged";
 
     protected GameObject player;
+    protected Vector2 destination;
 
     [SerializeField]
     protected float meleeDamage = 10;
@@ -15,8 +16,10 @@ public class SpiralShooterController : ICharacter
     [SerializeField]
     protected float speedIncrease = 4;
 
+   /* 
     [SerializeField]
     protected Vector2 destination = new Vector2(0, 0);
+    */
 
     [SerializeField]
     float angle, radius = 10;
@@ -36,6 +39,7 @@ public class SpiralShooterController : ICharacter
     {
         base.Awake();
         player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
+        destination = player.transform.position;
         playerPos = player.transform.position;
         setSpeed();
     }
@@ -47,6 +51,8 @@ public class SpiralShooterController : ICharacter
 
     protected virtual void FixedUpdate()
     {
+        destination = player.transform.position;
+        playerPos = player.transform.position;
         speedUpIfNeeded();
         //updateSpriteDirection();
     }
@@ -68,8 +74,10 @@ public class SpiralShooterController : ICharacter
         float x = radius * Mathf.Cos(Mathf.Deg2Rad * angle);
         float y = radius * Mathf.Sin(Mathf.Deg2Rad * angle);
 
-        transform.position = new Vector2(x, y);
-        playerPos = player.transform.position;
+        step = base.SpeedModifier() * Time.deltaTime;
+
+        transform.position = new Vector2(x + player.transform.position.x, y + player.transform.position.y);
+        
     }
 
 

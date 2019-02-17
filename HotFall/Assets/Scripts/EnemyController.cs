@@ -7,14 +7,18 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected GameObject player;
 
+    protected Vector2 destination;
+
     [SerializeField]
     protected float meleeDamage = 10;
 
     [SerializeField]
     protected float speedIncrease = 4;
-
+    
+    /*
     [SerializeField]
     protected Vector2 destination = new Vector2(0, 0);
+    */
 
     bool isWithinSpeedUp = false;
     float step;
@@ -24,6 +28,7 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         base.Awake();
         player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
+        destination = player.transform.position;
         setSpeed();
     }
 
@@ -34,6 +39,7 @@ public class EnemyController : ICharacter, IPooledObject {
 
     protected virtual void FixedUpdate()
     {
+        destination = player.transform.position;
         speedUpIfNeeded();
         //updateSpriteDirection();
     }
