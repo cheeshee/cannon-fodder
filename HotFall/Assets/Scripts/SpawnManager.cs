@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour {
     Transform[] spawnPoints;
 
     [SerializeField]
-    Enemies[] monstersToSpawn;
+    public Enemies[] monstersToSpawn;
 
     [System.Serializable]
     public class Enemies
@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour {
 
 
     [SerializeField]
-    int maxActiveEnemySpawned = 1;
+    public int maxActiveEnemySpawned = 1;
 
 
 
