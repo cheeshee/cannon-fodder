@@ -14,10 +14,9 @@ public class EnemyController : ICharacter, IPooledObject {
     [SerializeField]
     protected float speedIncrease = 4;
 
-    [SerializeField]
-    protected Vector2 destination = new Vector2(0, 0);
 
-    bool isWithinSpeedUp = false;
+    private Vector2 destination;
+
     float step;
 
 
@@ -25,70 +24,63 @@ public class EnemyController : ICharacter, IPooledObject {
     {
         base.Awake();
         player = GameObject.FindGameObjectWithTag(Tags.PLAYER);
-        setSpeed();
     }
 
     public void OnObjectSpawn()
     {
-        Debug.Log("SPAWN");
         base.healthPoints = base.maxHealth;
         base.updateHealthBar();
-        setSpeed();
+
     }
 
     protected virtual void FixedUpdate()
     {
-        speedUpIfNeeded();
+        setSpeed();
+        updateDestination();
+        move();
         //updateSpriteDirection();
     }
+
+
+
 
     #region Motion
     void setSpeed()
     {
-        step = base.SpeedModifier() * Time.deltaTime;
+        if (isWithinSpeedUp())
+        {
+            speedIncrease = base.speedModifier + player.GetComponent<Rigidbody2D>().velocity.magnitude;
+            step = speedIncrease * Time.deltaTime;
+        }
+        else
+        {
+            step = base.SpeedModifier() * Time.deltaTime;
+        }
+
+    }
+
+    void move()
+    {
         transform.position = Vector2.MoveTowards(transform.position, destination, step);
     }
 
-    /*public override void modifySpeed(float mod, float time)
+    bool isWithinSpeedUp()
     {
-        base.modifySpeed(mod, time);
-        setSpeed();
-    }*/
-
-    protected override void resetSpeedCoolDown()
-    {
-        base.resetSpeedCoolDown();
-        setSpeed();
+        return Vector3.Distance(player.transform.position, transform.position) - player.GetComponent<CircleCollider2D>().radius <= player.GetComponent<PlayerController>().getSpeedUpRange();
     }
 
-
-    protected virtual void speedUpIfNeeded()
+    void updateDestination()
     {
-            if (Vector3.Distance(player.transform.position, transform.position) - player.GetComponent<CircleCollider2D>().radius <= player.GetComponent<PlayerController>().getSpeedUpRange())
-            {
-                speedUp();
-            } else
-            {
-                setSpeed();
-            }
+        destination = player.transform.position;
     }
 
-    protected virtual void speedUp()
-    {
-        //time variable is for cool down, which is nothing rn
-        //float fastSpeed = base.moveSpeed * player.GetComponent<ICharacter>().SpeedModifier();    //player.gameObject.GetComponent<ICharacter>().SpeedModifier();
-        //base.modifySpeed(fastSpeed, 0);
-        //agent.maxSpeed = agent.maxSpeed * base.speedModifier;
-        speedIncrease = base.speedModifier + player.GetComponent<Rigidbody2D>().velocity.magnitude;
-        step = speedIncrease * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, destination, step);
-    }
-
+    /*
     void updateSpriteDirection()
     {
         // not sure if this is right
         transform.localScale = gameObject.transform.position;
     }
+    */
     #endregion
 
     #region LifeDeath
@@ -100,7 +92,6 @@ public class EnemyController : ICharacter, IPooledObject {
         gameObject.SetActive(false);
         
         // runAnimation(ANIMATION_DEATH);
-        // agent.enabled = false;
         //Invoke("completeDeathAnimation", 1.5f);
 
     }

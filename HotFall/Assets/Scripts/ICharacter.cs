@@ -49,38 +49,12 @@ public class ICharacter : MonoBehaviour {
 
     protected virtual void Update()
     {
+
         //coolDownMovement();
     }
 
     #endregion
 
-    #region Movement
-    /*
-    void coolDownMovement()
-    {
-        if (isCoolingDown)
-        {
-            coolDownTime -= Time.fixedDeltaTime;
-            if (coolDownTime < 0)
-            {
-                resetSpeedCoolDown();
-            }
-        }
-    }
-    */
-    public virtual void modifySpeed(float mod, float time)
-    {
-       // isCoolingDown = true;
-        coolDownTime = time;
-        speedModifier = mod;
-    }
-
-    protected virtual void resetSpeedCoolDown()
-    {
-        //isCoolingDown = false;
-        speedModifier = 1;
-    }
-    #endregion
 
     #region Health
     public virtual void decrementHealth(float damage)
