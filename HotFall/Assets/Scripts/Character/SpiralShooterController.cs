@@ -2,24 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpiralShooterController : ICharacter
+public class SpiralShooterController : EnemyController
 {
-    const string ANIMATION_DEATH = "Death";
-    const string ANIMATION_DAMAGED = "Damaged";
 
-    protected GameObject player;
-    protected Vector2 destination;
-
-    [SerializeField]
-    protected float meleeDamage = 10;
-
-    [SerializeField]
-    protected float speedIncrease = 4;
-
-   /* 
-    [SerializeField]
-    protected Vector2 destination = new Vector2(0, 0);
-    */
 
     [SerializeField]
     float angle, radius = 10;
@@ -31,7 +16,6 @@ public class SpiralShooterController : ICharacter
     float radialSpeed = 10;
 
     bool isWithinSpeedUp = false;
-    Vector2 playerPos;
     float initialAngle;
     float initialRadius;
 
@@ -40,11 +24,19 @@ public class SpiralShooterController : ICharacter
     {
         base.Awake();
 
+
+    }
+
+    public void OnObjectSpawn()
+    {
+
+        base.OnObjectSpawn();
         float quadrant = 0.0f;
 
         initialAngle = Mathf.Atan(transform.position.y / transform.position.x);
 
-        if(transform.position.y >= 0 && transform.position.x <=0){
+        if (transform.position.y >= 0 && transform.position.x <= 0)
+        {
             quadrant = 90;
         }
         else if (transform.position.y <= 0 && transform.position.x <= 0)
@@ -66,12 +58,7 @@ public class SpiralShooterController : ICharacter
         setSpeed();
     }
 
-    public void OnObjectSpawn()
-    {
-        setSpeed();
-    }
-
-    protected virtual void FixedUpdate()
+    protected override void FixedUpdate()
     {
         destination = player.transform.position;
         speedUpIfNeeded();

@@ -22,9 +22,9 @@ public class ICharacter : MonoBehaviour {
 
     [Header("Health")]
     [SerializeField]
-    public float healthPoints;
+    protected float healthPoints;
     [SerializeField]
-    public GameObject healthBar;
+    private GameObject healthBar;
 
     public float maxHealth;
 
