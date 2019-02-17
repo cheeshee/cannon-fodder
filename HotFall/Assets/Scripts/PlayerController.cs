@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRigidbody;
     private Animator animate;
 
+    bool delayFlag = false;
+
     // Use this for initialization
     void Start()
     {
@@ -82,14 +84,14 @@ public class PlayerController : MonoBehaviour
 
     void activateBullet(Vector3 direction)
     {
-        if (InputManager.isFiring())// && !cooldownHolder.isCoolingDown(0)
+        if (InputManager.isFiring() && delayFlag)// && !cooldownHolder.isCoolingDown(0)
         {
-            Debug.Log("FIRE");
             playerRigidbody.AddForce(-forceMultipler * Vector3.Normalize(direction), ForceMode2D.Impulse);
             // cooldownHolder.InitiateCooldown(0);
             GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
             bullet.GetComponent<Bullet>().OnObjectSpawn();
         }
+        delayFlag = !delayFlag;
     }
 
     public float getSpeedUpRange()

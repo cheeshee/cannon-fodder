@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ICharacter : MonoBehaviour {
 
-    public delegate void CharacterDelegate();
+    public delegate void CharacterDelegate(ICharacter character);
     public CharacterDelegate onCharacterDeath;
 
     [Header("Movement")]
@@ -22,11 +22,11 @@ public class ICharacter : MonoBehaviour {
 
     [Header("Health")]
     [SerializeField]
-    float healthPoints;
+    public float healthPoints;
     [SerializeField]
     public GameObject healthBar;
 
-    private float maxHealth;
+    public float maxHealth;
 
     #region Getter
     public float MoveSpeed()
@@ -43,58 +43,32 @@ public class ICharacter : MonoBehaviour {
     #region Mono
     protected virtual void Awake()
     {
-        maxHealth = healthPoints;
+        healthPoints = maxHealth;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     protected virtual void Update()
     {
+
         //coolDownMovement();
     }
 
     #endregion
 
-    #region Movement
-    /*
-    void coolDownMovement()
-    {
-        if (isCoolingDown)
-        {
-            coolDownTime -= Time.fixedDeltaTime;
-            if (coolDownTime < 0)
-            {
-                resetSpeedCoolDown();
-            }
-        }
-    }
-    */
-    public virtual void modifySpeed(float mod, float time)
-    {
-       // isCoolingDown = true;
-        coolDownTime = time;
-        speedModifier = mod;
-    }
-
-    protected virtual void resetSpeedCoolDown()
-    {
-        //isCoolingDown = false;
-        speedModifier = 1;
-    }
-    #endregion
 
     #region Health
     public virtual void decrementHealth(float damage)
     {
         healthPoints = Mathf.Clamp(healthPoints - damage, 0, maxHealth);
-
+        updateHealthBar();
         if (isHealthZero())
         {
             onDeath();
         }
-        updateHealthBar();
+        
     }
 
-    private void updateHealthBar()
+    public void updateHealthBar()
     {
         healthBar.transform.localScale = new Vector3(healthPoints / maxHealth * 50, 1, 1);
     }
@@ -106,7 +80,7 @@ public class ICharacter : MonoBehaviour {
 
     protected virtual void onDeath()
     {
-        onCharacterDeath();
+        onCharacterDeath(this);
     }
 
 

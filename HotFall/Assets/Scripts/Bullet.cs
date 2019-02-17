@@ -32,9 +32,9 @@ public class Bullet : IProjectile, IPooledObject
         GameObject hitTarget = col.gameObject;
         if (hitTarget.tag == Tags.ENEMY)
         {
-            Debug.Log("HIT");
-            hitTarget.GetComponent<ICharacter>().decrementHealth(damage);
             gameObject.SetActive(false);
+            hitTarget.GetComponent<ICharacter>().decrementHealth(damage);
+            
         }
 
         base.OnTriggerEnter2D(col);
