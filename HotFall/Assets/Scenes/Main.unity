@@ -850,6 +850,8 @@ MonoBehaviour:
   monstersToSpawn:
   - tag: 0
     percentage: 1
+  - tag: 1
+    percentage: 1
   maxActiveEnemySpawned: 25
 --- !u!4 &334431735
 Transform:
@@ -1055,6 +1057,10 @@ MonoBehaviour:
     size: 90
   - tag: BasicEnemy
     prefab: {fileID: 6468734434737578542, guid: 56052279b74b6974db28a3f697f2ee6d,
+      type: 3}
+    size: 50
+  - tag: ZeroEnemy
+    prefab: {fileID: 7492540441706714652, guid: c9286a902219edc47835e262efcaeac9,
       type: 3}
     size: 50
 --- !u!4 &405411874
