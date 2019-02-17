@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PolyNavAgent))]
 public class EnemyController : ICharacter, IPooledObject {
 
     const string ANIMATION_DEATH = "Death";
@@ -94,16 +93,14 @@ public class EnemyController : ICharacter, IPooledObject {
         base.decrementHealth(damage);
         if (!isHealthZero())
         {
-           // runAnimation(ANIMATION_DAMAGED);
+            runAnimation(ANIMATION_DAMAGED);
         }
     }
 
     protected override void onDeath()
     {
-       // runAnimation(ANIMATION_DEATH);
-       // agent.enabled = false;
-        //Invoke("completeDeathAnimation", 1.5f);
-
+        runAnimation(ANIMATION_DEATH);
+        Invoke("completeDeathAnimation", 1.5f);
     }
 
     void runAnimation(string name)
@@ -131,13 +128,5 @@ public class EnemyController : ICharacter, IPooledObject {
     }
 
     #endregion
-
-    #region Gizmo
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, player.GetComponent<PlayerController>().getSpeedUpRange());
-    }
-    #endregion
+    
 }
