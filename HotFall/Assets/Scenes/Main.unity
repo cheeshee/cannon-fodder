@@ -240,7 +240,7 @@ Transform:
   m_GameObject: {fileID: 183100168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -372,7 +372,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c95fbfdc3716c54ca2ba9ead41a9833, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 624aeef834df91c4d9911d3ad778e242, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -539,7 +539,6 @@ GameObject:
   - component: {fileID: 754472249}
   - component: {fileID: 754472248}
   - component: {fileID: 754472247}
-  - component: {fileID: 754472246}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -547,29 +546,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &754472246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 754472245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 3.5
-  mass: 20
-  stoppingDistance: 0.1
-  slowingDistance: 1
-  decelerationRate: 2
-  closerPointOnInvalid: 1
-  rotateTransform: 1
-  rotateSpeed: 350
-  sendMessages: 1
-  debugPath: 1
-  avoidRadius: 0
 --- !u!61 &754472247
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -608,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410b254bf527a424a83258a5acd82e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 5
   invulnerableTimer: 0
   healthPoints: 100
   healthBar: {fileID: 811444564}
