@@ -24,16 +24,17 @@ public class PlayerController : MonoBehaviour
     protected float speedUpRange = 5;
 
     private Rigidbody2D playerRigidbody;
-    private Animator animate;
 
     bool delayFlag = false;
     bool isInvuln;
+
+    Animator anim;
 
     // Use this for initialization
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        animate = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         isInvuln = false;
     }
 
@@ -146,10 +147,13 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.isFiring() && delayFlag)// && !cooldownHolder.isCoolingDown(0)
         {
+            
             playerRigidbody.AddForce(-forceMultipler * Vector3.Normalize(direction), ForceMode2D.Impulse);
+            anim.SetBool("is_firing", true);
             // cooldownHolder.InitiateCooldown(0);
             GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
             bullet.GetComponent<Bullet>().OnObjectSpawn();
+            anim.SetBool("is_firing", false);
         }
         delayFlag = !delayFlag;
     }

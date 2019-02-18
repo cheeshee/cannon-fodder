@@ -8,12 +8,13 @@ public class Bullet : IProjectile, IPooledObject
     //const string ANIMATION_EXPLOSION = "Explode";
     //const float EXPLOSION_ANIMATION_TIME = 0.4f;
 
-        /*
-    protected override void onMovementTimeToLiveStopped()
-    {
-        gameObject.SetActive(false);
-    }
-    */
+    /*
+protected override void onMovementTimeToLiveStopped()
+{
+    gameObject.SetActive(false);
+}
+*/
+    Animator anim;
 
     void OnBecameInvisible() {
         gameObject.SetActive(false);
@@ -21,10 +22,12 @@ public class Bullet : IProjectile, IPooledObject
 
     public void OnObjectSpawn()
     {
+        anim = GetComponent<Animator>();
         Vector3 dir = transform.rotation.eulerAngles;
         angle = Utilities.getAngleDegBetween(dir.y, dir.x) + 90;
         //base.currentTimeToLive = 0;
         isMoving = true;
+        anim.SetTrigger("isMoving");
     }
 
     protected override void OnTriggerEnter2D(Collider2D col)
