@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
         isInvuln = false;
         velocity = 0;
     }
@@ -185,11 +184,9 @@ public class PlayerController : MonoBehaviour
         {
             
             playerRigidbody.AddForce(-forceMultipler * Vector3.Normalize(direction), ForceMode2D.Impulse);
-            anim.SetBool("is_firing", true);
             // cooldownHolder.InitiateCooldown(0);
             GameObject bullet = ObjectPooler.Instance.SpawnFromPool(Pool.BULLET, transform.position, getPlayerRotation());
             bullet.GetComponent<Bullet>().OnObjectSpawn();
-            anim.SetBool("is_firing", false);
         }
         delayFlag = !delayFlag;
     }
