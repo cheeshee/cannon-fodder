@@ -541,9 +541,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56d13c014e0f9c478b329924c26a781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 20
+  healthPoints: 15
   healthBar: {fileID: 1534394324}
-  maxHealth: 20
+  maxHealth: 15
   forceMultipler: 0.6
   wallVelocity: 5
   speedUpRange: 50
