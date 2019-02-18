@@ -36,7 +36,7 @@ public class SpiralShooterController : EnemyController
     {
         if (isWithinSpeedUp())
         {
-            spiral(approachSpeed  * player.GetComponent<Rigidbody2D>().velocity.magnitude);
+            spiral(approachSpeed  * base.player.GetComponent<PlayerController>().getVelocity());
         }
         else
         {

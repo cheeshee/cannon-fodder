@@ -19,14 +19,14 @@ public class SpawnManager : MonoBehaviour {
     }
 
 
-    [SerializeField]
-    public int maxActiveEnemySpawned = 1;
+
+
 
 
 
     private int currentActiveEnemies;
     private int totalEnemiesSpawned = 0;
-
+    private int maxActiveEnemySpawned = 1;
 
     private void Awake()
     {
@@ -128,6 +128,8 @@ public class SpawnManager : MonoBehaviour {
                 return Pool.BASIC_ENEMY;
             case ENEMIES.ZERO_ENEMY:
                 return Pool.ZERO_ENEMY;
+            case ENEMIES.SPIRAL_ENEMY:
+                return Pool.SPIRAL_ENEMY;
             default:
                 return Pool.BASIC_ENEMY;
         }
@@ -139,6 +141,17 @@ public class SpawnManager : MonoBehaviour {
         currentActiveEnemies--;
         character.onCharacterDeath -= enemyOnDeath;
             
+    }
+
+
+    public void setMaxEnemies(int i)
+    {
+        maxActiveEnemySpawned = i;
+    }
+
+    public void setEnemiesPercent(int i, float percent)
+    {
+        monstersToSpawn[i].percentage = percent;
     }
     #endregion
 
@@ -156,5 +169,6 @@ public class SpawnManager : MonoBehaviour {
 public enum ENEMIES
 {
     BASIC_ENEMY,
-    ZERO_ENEMY
+    ZERO_ENEMY,
+    SPIRAL_ENEMY
 }

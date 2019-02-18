@@ -40,8 +40,10 @@ protected override void onMovementTimeToLiveStopped()
             
         }
 
+
         base.OnTriggerEnter2D(col);
     }
+
 
     protected override void onHitObject()
     {

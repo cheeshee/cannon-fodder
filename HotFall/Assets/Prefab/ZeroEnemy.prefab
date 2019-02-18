@@ -211,11 +211,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48548645428854841acc340ceb4619a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 5
   invulnerableTimer: 0
-  healthPoints: 10
+  healthPoints: 20
   healthBar: {fileID: 1320080760023945691}
-  maxHealth: 10
+  maxHealth: 20
   meleeDamage: 1
-  speedMultiplier: 1
-  maximumSpeedMultiplier: 3
+  speedMultiplier: 3
+  maximumSpeedMultiplier: 20
